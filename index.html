@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="th">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>คุณคิดถึงคนเก่าแค่ไหน</title>
+<meta name="description" content="แบบทดสอบ 5 ข้อ มาดูกันว่าคุณเป็นสัตว์อะไรในจักรวาลคนเก่า">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tataprin.github.io/miss-ex-quiz/">
+<meta property="og:title" content="คุณคิดถึงคนเก่าแค่ไหน">
+<meta property="og:description" content="แบบทดสอบ 5 ข้อ มาดูกันว่าคุณเป็นสัตว์อะไรในจักรวาลคนเก่า">
+<meta property="og:image" content="https://tataprin.github.io/miss-ex-quiz/assets/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/penguin.webp">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Itim&family=Mitr:wght@400;500;600&display=swap">
+<style>
+/* Layout: a pastel retro desktop — one cute app window on grid paper; intro, quiz and result screens swap inside it */
+:root{
+  --desk:#FFE8DE;
+  --grid:#F8D3C6;
+  --paper:#FFFBF7;
+  --card:#FFFFFF;
+  --ink:#6A3D4C;
+  --ink-2:#A57F8B;
+  --pink:#FFC4D3;
+  --pink-2:#F27C9C;
+  --mint:#C4F0E5;
+  --lav:#DED0FF;
+  --butter:#FFF0A6;
+  --peach:#FFD5B5;
+  --sky:#CFE6FF;
+  --f-display:"Mitr","Itim",system-ui,sans-serif;
+  --f-body:"Itim","Mitr",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--desk)}
+body{
+  background-color:var(--desk);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:28px 48px;
+  overflow-x:hidden;
+}
+button{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;text-wrap:balance;margin:0;line-height:1.3}
+p{margin:0}
+
+/* desk decorations */
+.deco{position:fixed;pointer-events:none;z-index:0;stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
+.deco.cloud{fill:var(--paper)}
+.deco.spark{fill:var(--butter)}
+.deco.heart{fill:var(--pink)}
+.d1{width:120px;top:6%;left:3%}
+.d2{width:34px;top:22%;left:9%}
+.d3{width:46px;top:12%;right:6%;fill:var(--lav)}
+.d4{width:140px;bottom:8%;right:3%}
+.d5{width:30px;bottom:24%;right:10%}
+.d6{width:40px;bottom:12%;left:5%}
+@media (prefers-reduced-motion:no-preference){
+  .deco{animation:bob 6s ease-in-out infinite}
+  .d2,.d5{animation-duration:4s}
+  .d4{animation-delay:-2s}
+  .d6{animation-delay:-3s}
+}
+@keyframes bob{50%{transform:translateY(-8px) rotate(3deg)}}
+
+/* window */
+.win{
+  position:relative;z-index:1;max-width:780px;margin:0 auto;
+  background:var(--paper);border:3px solid var(--ink);border-radius:22px;
+  box-shadow:0 8px 0 var(--ink-2);
+}
+.bar{border-bottom:3px solid var(--ink);background:var(--lav);border-radius:19px 19px 0 0}
+.tabs{display:flex;align-items:flex-end;gap:8px;padding:10px 14px 0}
+.tab{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--paper);border:2.5px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;
+  padding:2px 14px 0;font-family:var(--f-display);font-size:14px;letter-spacing:.04em;
+}
+.tab .x{font-size:13px;opacity:.7}
+.nav{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--paper);border-top:2.5px solid var(--ink)}
+.nav svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.url{
+  flex:1;min-width:0;border:2.5px solid var(--ink);border-radius:999px;padding:0 14px;
+  font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--card);
+}
+.nav .star{fill:var(--butter)}
+
+.screen{padding:32px 36px 40px}
+@media (max-width:600px){
+  .screen{padding:24px 18px 30px}
+  .nav .hide-sm{display:none}
+  body{padding-block:16px 32px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .screen.enter{animation:rise .4s cubic-bezier(.2,.9,.3,1.3)}
+}
+@keyframes rise{from{opacity:.2;transform:translateY(14px) scale(.98)}}
+
+.eyebrow{font-family:var(--f-display);font-size:14px;letter-spacing:.06em;color:var(--ink-2)}
+
+/* buttons */
+.btn{
+  font-family:var(--f-display);font-weight:500;font-size:18px;line-height:1.4;
+  padding:10px 26px;border:3px solid var(--ink);border-radius:14px;
+  background:var(--butter);color:var(--ink);box-shadow:0 5px 0 var(--ink);
+  cursor:pointer;transition:transform .1s,box-shadow .1s,background .15s;
+}
+.btn:hover{background:var(--pink)}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn-alt{background:var(--sky)}
+.btn-alt:hover{background:var(--mint)}
+button:focus-visible,summary:focus-visible{outline:3px dashed var(--pink-2);outline-offset:4px}
+
+.heart-ico{fill:var(--pink-2);stroke:var(--ink);stroke-width:2}
+
+/* intro */
+#intro{display:grid;justify-items:center;text-align:center;gap:18px}
+.bubble{
+  position:relative;display:flex;gap:6px;padding:8px 14px;
+  border:2.5px solid var(--ink);border-radius:14px;background:var(--card);
+}
+.bubble::after{
+  content:"";position:absolute;left:50%;bottom:-9px;width:14px;height:14px;margin-left:-7px;
+  background:var(--card);border-right:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);transform:rotate(45deg);
+}
+.bubble svg{width:24px;height:24px;fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.bubble svg:nth-child(-n+4){fill:var(--pink)}
+@media (prefers-reduced-motion:no-preference){
+  .bubble svg{animation:beat 2.4s ease-in-out infinite}
+  .bubble svg:nth-child(2){animation-delay:.15s}
+  .bubble svg:nth-child(3){animation-delay:.3s}
+  .bubble svg:nth-child(4){animation-delay:.45s}
+  .bubble svg:nth-child(5){animation-delay:.6s}
+}
+@keyframes beat{0%,60%,100%{transform:scale(1)}30%{transform:scale(1.2)}}
+h1{font-size:clamp(34px,8vw,56px);line-height:1.35}
+h1 .ribbon{
+  display:inline-block;margin-inline:6px;padding:0 16px;
+  background:var(--butter);border:3px solid var(--ink);border-radius:12px;
+  transform:rotate(-3deg);box-shadow:4px 4px 0 var(--pink-2);
+}
+.lead{max-width:34ch;font-size:19px}
+.cast{list-style:none;margin:6px 0 4px;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 18px}
+.cast li{display:grid;justify-items:center;gap:6px;font-size:15px}
+.cast img{
+  width:88px;height:88px;border-radius:50%;object-fit:cover;
+  border:3px solid var(--ink);background:var(--card);transition:transform .2s;
+}
+.cast li:nth-child(odd) img{transform:rotate(-5deg)}
+.cast li:nth-child(even) img{transform:rotate(5deg)}
+.cast li:hover img{transform:rotate(0) scale(1.08)}
+.meta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chip{
+  font-family:var(--f-display);font-size:14px;padding:2px 12px;
+  border:2px solid var(--ink);border-radius:999px;background:var(--mint);
+}
+.chip:nth-child(2){background:var(--peach)}
+.tiny{font-size:14px;color:var(--ink-2)}
+
+/* quiz */
+.q-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.q-count{font-family:var(--f-display);font-size:16px;padding:2px 14px;border:2.5px solid var(--ink);border-radius:999px;background:var(--butter)}
+.progress{list-style:none;display:flex;gap:6px;margin:0;padding:0}
+.progress svg{width:28px;height:28px;display:block;fill:var(--card);stroke:var(--ink);stroke-width:2;transition:fill .2s}
+.progress li.now svg{fill:var(--butter)}
+.progress li.done svg{fill:var(--pink-2)}
+@media (prefers-reduced-motion:no-preference){
+  .progress li.now svg{animation:beat 1.6s ease-in-out infinite}
+}
+.q-text{font-size:clamp(22px,4.4vw,30px);margin-bottom:22px}
+.opts{display:grid;gap:14px}
+@media (min-width:660px){.opts{grid-template-columns:1fr 1fr}}
+.opt{
+  display:flex;align-items:center;gap:14px;width:100%;min-width:0;text-align:left;
+  padding:14px 16px;background:var(--card);border:2.5px solid var(--ink);border-radius:16px;
+  box-shadow:0 4px 0 var(--ink-2);font-size:17px;line-height:1.55;cursor:pointer;
+  transition:transform .12s,background .15s,opacity .2s,box-shadow .12s;
+}
+.opt:hover:not(:disabled){transform:translateY(-2px);background:var(--paper);box-shadow:0 6px 0 var(--ink-2)}
+.opt:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 var(--ink-2)}
+.opt:disabled{cursor:default}
+.opt .txt{min-width:0}
+.letter{
+  flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  border:2.5px solid var(--ink);font-family:var(--f-display);font-weight:600;font-size:16px;
+}
+.l0{background:var(--pink)}.l1{background:var(--mint)}.l2{background:var(--lav)}.l3{background:var(--peach)}
+.opt.is-picked{background:var(--butter);box-shadow:0 4px 0 var(--ink)}
+.opt.is-muted{opacity:.42}
+
+.reveal{margin-top:24px;border:3px solid var(--ink);border-radius:16px;background:var(--card);overflow:hidden}
+.reveal-bar{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:4px 14px;background:var(--pink);border-bottom:2.5px solid var(--ink);
+  font-family:var(--f-display);font-size:15px;letter-spacing:.04em;
+}
+.reveal-bar .dots{display:flex;gap:5px}
+.reveal-bar .dots i{width:12px;height:12px;border-radius:50%;border:2px solid var(--ink);background:var(--paper)}
+.reveal-body{padding:16px 18px 18px;display:grid;gap:16px}
+.reveal-body p{font-size:18px}
+.reveal-actions{display:flex;justify-content:flex-end}
+@media (prefers-reduced-motion:no-preference){
+  .reveal.pop{animation:pop .35s cubic-bezier(.2,.9,.3,1.4)}
+}
+@keyframes pop{from{transform:scale(.92);opacity:.3}}
+
+/* result */
+#result{display:grid;gap:26px}
+.res-hero{display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:center}
+@media (max-width:620px){.res-hero{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.frame{position:relative;margin:0;padding:12px;width:100%;max-width:260px;border:2.5px dotted var(--ink-2)}
+.frame img{display:block;width:100%;aspect-ratio:1;border-radius:20px;border:3px solid var(--ink);background:var(--card)}
+.frame i{position:absolute;width:12px;height:12px;border:2px solid var(--ink);background:var(--paper)}
+.frame i:nth-of-type(1){top:-7px;left:-7px}
+.frame i:nth-of-type(2){top:-7px;right:-7px}
+.frame i:nth-of-type(3){bottom:-7px;left:-7px}
+.frame i:nth-of-type(4){bottom:-7px;right:-7px}
+@media (prefers-reduced-motion:no-preference){
+  .frame img{animation:wiggle 3.2s ease-in-out infinite}
+}
+@keyframes wiggle{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.res-info{display:grid;gap:10px;min-width:0}
+.score-pill{
+  justify-self:start;font-family:var(--f-display);font-size:16px;
+  padding:2px 14px;border:2.5px solid var(--ink);border-radius:999px;background:var(--accent,var(--butter));
+}
+@media (max-width:620px){.score-pill{justify-self:center}}
+.score-pill b{font-size:22px;font-weight:600}
+.res-name{font-size:clamp(28px,5.6vw,40px)}
+.res-en{font-family:var(--f-display);font-size:18px;color:var(--ink-2);letter-spacing:.03em}
+.quote{
+  position:relative;margin:8px 0 0;padding:12px 16px;border:2.5px solid var(--ink);border-radius:16px;
+  background:var(--accent,var(--card));font-size:19px;
+}
+.quote::before{
+  content:"";position:absolute;top:-9px;left:28px;width:14px;height:14px;
+  background:var(--accent,var(--card));border-left:2.5px solid var(--ink);border-top:2.5px solid var(--ink);transform:rotate(45deg);
+}
+@media (max-width:620px){.quote::before{left:50%;margin-left:-7px}}
+.desc{font-size:18px;max-width:62ch}
+
+.meter-wrap{display:grid;gap:8px}
+.meter-wrap h3,.table-wrap h3{font-size:19px}
+.meter{position:relative;display:grid;grid-template-columns:repeat(4,1fr);border:2.5px solid var(--ink);border-radius:999px;overflow:hidden;height:22px}
+.meter span:nth-child(1){background:var(--mint)}
+.meter span:nth-child(2){background:var(--peach);border-left:2px solid var(--ink)}
+.meter span:nth-child(3){background:var(--sky);border-left:2px solid var(--ink)}
+.meter span:nth-child(4){background:var(--lav);border-left:2px solid var(--ink)}
+.meter-track{position:relative;height:60px}
+.meter-track .meter{position:absolute;left:0;right:0;bottom:0}
+.pin{
+  position:absolute;top:0;transform:translateX(-50%);
+  width:30px;height:30px;transition:left .8s cubic-bezier(.2,.9,.3,1.2);
+}
+.pin svg{width:100%;height:100%}
+.ticks{display:grid;grid-template-columns:repeat(4,1fr);font-family:var(--f-display);font-size:14px;text-align:center;color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+.table-wrap{display:grid;gap:10px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:16px}
+th{font-family:var(--f-display);font-weight:500;font-size:14px;letter-spacing:.04em;color:var(--ink-2);text-align:left;padding:0 12px}
+td{padding:8px 12px;border-block:2.5px solid var(--ink);background:var(--card);vertical-align:middle}
+td:first-child{border-left:2.5px solid var(--ink);border-radius:14px 0 0 14px;font-family:var(--f-display);font-variant-numeric:tabular-nums;white-space:nowrap}
+td:last-child{border-right:2.5px solid var(--ink);border-radius:0 14px 14px 0}
+tr.me td{background:var(--accent,var(--butter))}
+.who{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.who img{width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);object-fit:cover;background:var(--card)}
+.you{font-family:var(--f-display);font-size:12px;padding:0 8px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);margin-left:4px}
+
+.recap{border:2.5px solid var(--ink);border-radius:16px;background:var(--card)}
+.recap summary{cursor:pointer;padding:10px 16px;font-family:var(--f-display);font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.recap summary::-webkit-details-marker{display:none}
+.recap summary::after{content:"+";font-size:22px;line-height:1}
+.recap[open] summary::after{content:"−"}
+.recap[open] summary{border-bottom:2.5px dashed var(--ink-2)}
+.recap ol{list-style:none;margin:0;padding:6px 16px 14px;display:grid}
+.recap li{display:grid;gap:4px;padding:12px 0;border-bottom:2px dotted var(--grid)}
+.recap li:last-child{border-bottom:0}
+.recap .rq{font-size:14px;color:var(--ink-2)}
+.recap .ra{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:16px}
+.recap .ra .letter{width:30px;height:30px;font-size:14px}
+.recap .pts{font-size:13px;padding:0 8px;border:2px solid var(--ink);border-radius:999px;background:var(--butter);white-space:nowrap}
+.recap .re{font-size:16px}
+
+.outro{
+  text-align:center;padding:22px 18px;border:3px solid var(--ink);border-radius:18px;
+  background:var(--pink);display:grid;gap:10px;justify-items:center;
+}
+.outro p{max-width:46ch;font-size:18px}
+.outro .last{font-family:var(--f-display);font-weight:500;font-size:20px}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+#copybox{width:100%;min-height:110px;font:inherit;font-size:15px;border:2.5px solid var(--ink);border-radius:12px;padding:10px;background:var(--card);color:var(--ink)}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M12 20.5s-7.6-4.6-9.5-9.3C1.1 7.7 3.3 4 6.9 4c2.2 0 3.7 1.3 5.1 3.1C13.4 5.3 14.9 4 17.1 4c3.6 0 5.8 3.7 4.4 7.2-1.9 4.7-9.5 9.3-9.5 9.3z"/></symbol>
+  <symbol id="cloud" viewBox="0 0 70 44"><path d="M17 40h36a11 11 0 0 0 1.5-21.9A15 15 0 0 0 26 12.5a11 11 0 0 0-10 10.6A8.6 8.6 0 0 0 17 40z"/></symbol>
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 2c1 6.5 3.5 9 10 10-6.5 1-9 3.5-10 10-1-6.5-3.5-9-10-10 6.5-1 9-3.5 10-10z"/></symbol>
+</svg>
+
+<svg class="deco cloud d1" viewBox="0 0 70 44" aria-hidden="true"><use href="#cloud"/></svg>
+<svg class="deco spark d2" viewBox="0 0 24 24" aria-hidden="true"><use href="#spark"/></svg>
+<svg class="deco heart d3" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+<svg class="deco cloud d4" viewBox="0 0 70 44" aria-hidden="true"><use href="#cloud"/></svg>
+<svg class="deco spark d5" viewBox="0 0 24 24" aria-hidden="true"><use href="#spark"/></svg>
+<svg class="deco heart d6" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+
+<main class="win">
+  <div class="bar" aria-hidden="true">
+    <div class="tabs"><span class="tab">miss_you.exe <span class="x">✕</span></span></div>
+    <div class="nav">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+      <svg viewBox="0 0 24 24" class="hide-sm"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+      <svg viewBox="0 0 24 24" class="hide-sm"><path d="M19 12a7 7 0 1 1-2.1-5M19 4v4h-4"/></svg>
+      <span class="url">www.คิดถึงคนเก่า.com</span>
+      <svg viewBox="0 0 24 24" class="star"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9l-5.4 2.9 1.1-6.1-4.5-4.3 6.1-.8z"/></svg>
+    </div>
+  </div>
+
+  <!-- intro -->
+  <section id="intro" class="screen">
+    <div class="bubble" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><use href="#heart"/></svg><svg viewBox="0 0 24 24"><use href="#heart"/></svg><svg viewBox="0 0 24 24"><use href="#heart"/></svg><svg viewBox="0 0 24 24"><use href="#heart"/></svg><svg viewBox="0 0 24 24"><use href="#heart"/></svg>
+    </div>
+    <h1>คุณคิดถึง<br><span class="ribbon">คนเก่า</span>แค่ไหน</h1>
+    <p class="lead">ตอบตามใจจริง แล้วมาดูกันว่าคุณเป็นสัตว์อะไรในจักรวาลคนเก่า</p>
+    <div class="meta-row"><span class="chip">5 ข้อ</span><span class="chip">คะแนนเต็ม 20</span></div>
+    <ul class="cast">
+      <li><img src="assets/capybara.webp" alt="คาปิบาร่าแช่น้ำพุร้อน">คาปิบาร่า</li>
+      <li><img src="assets/cat.webp" alt="แมวส้มถือแว่นขยาย">แมวส้ม</li>
+      <li><img src="assets/penguin.webp" alt="เพนกวินกอดหัวใจ">เพนกวิน</li>
+      <li><img src="assets/kraken.webp" alt="หมึกยักษ์ร้องไห้">หมึกยักษ์</li>
+    </ul>
+    <button class="btn" id="start" type="button">เริ่มเลย</button>
+    <p class="tiny">ใช้เวลาไม่ถึง 2 นาที</p>
+  </section>
+
+  <!-- quiz -->
+  <section id="quiz" class="screen" hidden>
+    <div class="q-top">
+      <span class="q-count">ข้อ <b id="qn">1</b> / 5</span>
+      <ol class="progress" id="progress" aria-hidden="true">
+        <li><svg viewBox="0 0 24 24"><use href="#heart"/></svg></li>
+        <li><svg viewBox="0 0 24 24"><use href="#heart"/></svg></li>
+        <li><svg viewBox="0 0 24 24"><use href="#heart"/></svg></li>
+        <li><svg viewBox="0 0 24 24"><use href="#heart"/></svg></li>
+        <li><svg viewBox="0 0 24 24"><use href="#heart"/></svg></li>
+      </ol>
+    </div>
+    <h2 class="q-text" id="qtext"></h2>
+    <div class="opts" id="opts" role="group" aria-labelledby="qtext"></div>
+    <div class="reveal" id="reveal" hidden aria-live="polite">
+      <div class="reveal-bar"><span>เฉลย ข้อ <b id="rletter">A</b></span><span class="dots" aria-hidden="true"><i></i><i></i></span></div>
+      <div class="reveal-body">
+        <p id="rtext"></p>
+        <div class="reveal-actions"><button class="btn" id="next" type="button">ไปข้อต่อไป</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- result -->
+  <section id="result" class="screen" hidden>
+    <p class="eyebrow">ผลลัพธ์ของคุณ · คุณเป็นสัตว์อะไรในจักรวาลคนเก่า?</p>
+    <div class="res-hero">
+      <figure class="frame"><img id="rimg" src="assets/penguin.webp" alt=""><i></i><i></i><i></i><i></i></figure>
+      <div class="res-info">
+        <p class="score-pill"><b id="rscore">0</b> / 20 คะแนน</p>
+        <h2 class="res-name" id="rname"></h2>
+        <p class="res-en" id="ren"></p>
+        <blockquote class="quote" id="rquote"></blockquote>
+      </div>
+    </div>
+    <p class="desc" id="rdesc"></p>
+
+    <div class="meter-wrap">
+      <h3>คะแนนของคุณอยู่ตรงนี้</h3>
+      <div class="meter-track"><div class="meter"><span></span><span></span><span></span><span></span></div>
+        <div class="pin" id="pin" style="left:50%"><svg viewBox="0 0 24 24"><use href="#heart" class="heart-ico"/></svg></div>
+      </div>
+      <div class="ticks"><span>5–8</span><span>9–12</span><span>13–16</span><span>17–20</span></div>
+    </div>
+
+    <div class="table-wrap">
+      <h3>ตารางคะแนนรวม</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>คะแนน</th><th>Character</th><th>ฉายา</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <details class="recap">
+      <summary>ดูคำตอบทั้ง 5 ข้อของฉัน</summary>
+      <ol id="recap"></ol>
+    </details>
+
+    <div class="outro">
+      <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><use href="#heart" class="heart-ico"/></svg>
+      <p>คนไทยมีสัตว์ประจำตัวแตกต่างกันไป แต่มีสิ่งหนึ่งที่เหมือนกัน คือเป็นสัตว์ที่ยังไม่สามารถออกจากความสัมพันธ์ครั้งเก่าได้</p>
+      <p class="last">ต่างคนต่างความทรงจำ แต่ทำไมใจยังอยู่ที่คนเดิมกันนะ 💔</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="again" type="button">เล่นอีกครั้ง</button>
+      <button class="btn btn-alt" id="copy" type="button">คัดลอกผลลัพธ์</button>
+    </div>
+    <textarea id="copybox" hidden readonly aria-label="ข้อความผลลัพธ์สำหรับคัดลอก"></textarea>
+  </section>
+</main>
+
+<script>
+const QUESTIONS = [
+  { q: "หากเดินผ่านสถานที่ที่เคยไปกับแฟนเก่า คุณจะทำอย่างไร?", opts: [
+    ["ถ่ายรูปลง Story พร้อมเพลงเศร้า", 3, "คุณอาจไม่ได้ต้องการให้ใครเห็นเป็นพิเศษ แต่ถ้าคนคนนั้นผ่านมาเห็นก็คงดีไม่น้อย เป็นการสื่อสารทางอ้อมที่หวังผลทางตรง โดยเฉพาะกับคนที่ไม่เคยตอบ Story เราเลย"],
+    ["เดินผ่านไปเหมือนไม่มีอะไรเกิดขึ้น", 1, "คุณเป็นคนที่ดูเหมือนจะมูฟออนได้แล้ว แต่ความจริงคือแค่เดินผ่านไปได้โดยไม่ร้องไห้เท่านั้นเอง สถานที่เดิมยังอยู่ คนเดิมไม่อยู่ แต่ความทรงจำยังทำงานเต็มประสิทธิภาพ"],
+    ["ทักไปถามว่า ยังจำร้านนี้ได้ไหม", 4, "ขอแสดงความยินดี คุณได้ก้าวข้ามขีดจำกัดของการคิดถึงไปสู่การลงมือปฏิบัติแล้ว คุณไม่ได้แค่คิดถึงสถานที่ แต่กำลังหาเหตุผลในการกลับเข้าไปอยู่ในชีวิตเขาอีกครั้ง"],
+    ["หยุดมองสักพัก แล้วนึกถึงความหลัง", 2, "คุณไม่ได้ตั้งใจจะคิดถึงเขา แต่สถานที่แห่งนี้ดันมีความทรงจำมากเกินไป เหมือนสมองเปิด Flashback อัตโนมัติ ทั้งที่ไม่ได้กด Subscribe ไว้"]
+  ]},
+  { q: "ถ้าบังเอิญเจอเพลงที่เคยฟังด้วยกัน คุณจะ…", opts: [
+    ["กดข้ามทันที ไม่อยากฟัง", 1, "คุณเลือกที่จะปกป้องสุขภาพจิตตัวเองด้วยการกด Skip แต่การที่ต้องรีบกดขนาดนี้ก็แสดงว่าเพลงนี้ยังมีอิทธิพลต่อจิตใจอยู่ไม่น้อย บางทีสิ่งที่คุณอยากข้ามอาจไม่ใช่เพลง แต่เป็นช่วงเวลานั้นต่างหาก"],
+    ["เปิดวน 10 รอบ พร้อมร้องตามทุกคำ", 3, "ยินดีด้วย คุณได้เปลี่ยนเพลงธรรมดาให้กลายเป็นเพลงประจำชีวิตไปแล้ว ทุกท่อนร้องได้หมด เพราะผ่านการซ้อมมาอย่างหนักในช่วงเวลาที่คิดถึงเขา เรียกได้ว่าเพลงจบได้ แต่ความรู้สึกยังไม่จบ"],
+    ["เข้าไปดูว่าเขายังใช้เพลงนี้ใน Playlist อยู่ไหม", 4, "คุณไม่ได้ฟังเพลงเพื่อความบันเทิงอีกต่อไป แต่กำลังทำวิจัยเชิงสืบสวนเกี่ยวกับพฤติกรรมของบุคคลในอดีต ทุก Playlist คือหลักฐาน ทุกเพลงคือเบาะแส และคุณคือ FBI ที่ไม่มีวันเกษียณ"],
+    ["ฟังจนจบ เพราะเพลงเพราะดี", 2, "คุณอาจจะชอบเพลงจริง ๆ ก็ได้ แต่ทำไมต้องเป็นเพลงที่เคยฟังด้วยกันด้วยนะ คุณกำลังแยกระหว่างความชอบในดนตรีกับความทรงจำ ซึ่งดูเหมือนจะยังแยกกันไม่ค่อยออก"]
+  ]},
+  { q: "ถ้าแฟนเก่าลงรูปกับคนใหม่ คุณจะ…", opts: [
+    ["กดดู Story ซ้ำ ๆ ทั้งที่ดูไปแล้ว 8 รอบ", 4, "คุณกำลังตรวจสอบหลักฐานอย่างละเอียด เผื่อมีรายละเอียดบางอย่างที่พลาดไปในการดูรอบแรก แม้จะรู้ว่าดูอีกกี่รอบก็ไม่ได้ทำให้สถานการณ์เปลี่ยน แต่ก็ยังหยุดไม่ได้ เพราะนี่คือหน้าที่ของผู้เฝ้าระวัง"],
+    ["ยินดีด้วย ขอให้มีความสุข", 1, "คุณเป็นคนที่มีวุฒิภาวะสูงมาก สามารถอวยพรให้คนที่เคยรักมีความสุขกับคนอื่นได้ แม้ลึก ๆ อาจจะแอบสงสัยว่า ทำไมตอนอยู่กับเราถึงไม่เห็นยิ้มขนาดนี้"],
+    ["เปรียบเทียบตัวเองกับคนใหม่ แล้วตั้งคำถามกับชีวิต", 3, "คุณเริ่มเข้าสู่กระบวนการวิเคราะห์ข้อมูลครั้งใหญ่ ทั้งหน้าตา บุคลิก ไลฟ์สไตล์ และความสามารถพิเศษ แต่สุดท้ายก็ยังไม่ได้คำตอบว่าทำไมเขาถึงเลือกคนนี้แทนเรา งานวิจัยนี้จึงยังต้องศึกษาต่อไปอย่างไม่มีกำหนด"],
+    ["กดเข้าไปดูโปรไฟล์คนใหม่", 2, "คุณไม่ได้อยากเปรียบเทียบตัวเองหรอก แค่อยากรู้ว่าเขาเป็นใคร ทำอะไร เรียนที่ไหน และมีอะไรที่เรายังไม่รู้บ้าง จากนั้นก็อาจใช้เวลาอีก 45 นาทีในการไล่ดูรูปตั้งแต่ปี 2018"]
+  ]},
+  { q: "ถ้าเขาทักมาว่า “เป็นไงบ้าง?”", opts: [
+    ["ตอบกลับแล้วแอบยิ้ม", 2, "แค่เห็นชื่อแจ้งเตือน หัวใจก็กลับมาทำงานอย่างมีประสิทธิภาพทันที คุณอาจไม่ได้คาดหวังอะไร แต่รอยยิ้มที่เกิดขึ้นกลับเป็นหลักฐานชั้นดีว่าเขายังมีผลต่อความรู้สึกของคุณอยู่"],
+    ["รีบตอบภายใน 0.2 วินาที ทั้งที่ปกติไม่ตอบใคร", 4, "คุณอาจไม่ได้รอเขาหรอก แค่บังเอิญถือโทรศัพท์อยู่ตลอด 24 ชั่วโมงเท่านั้นเอง ความเร็วในการตอบกลับระดับนี้สามารถนำไปประยุกต์ใช้กับการสอบ OSCE หรือการตอบสนองต่อภาวะฉุกเฉินได้เลย"],
+    ["ตอบว่า สบายดี ขอบคุณนะ", 1, "คุณพยายามรักษาระยะห่างและแสดงให้เห็นว่าชีวิตดำเนินต่อไปได้ดี แต่หลังจากส่งข้อความไปแล้วก็อาจกลับมาอ่านแชตตัวเองอีกหลายรอบ เพื่อเช็กว่าน้ำเสียงดูเย็นชาพอหรือยัง"],
+    ["พิมพ์ยาว 3 ย่อหน้า แต่ลบเหลือแค่ “ดี”", 3, "ภายในใจมีเรื่องอยากเล่ามากมาย ทั้งชีวิตที่ผ่านมา ความรู้สึกที่ยังค้างคา และคำถามที่ไม่เคยได้รับคำตอบ แต่สุดท้ายศักดิ์ศรีก็ชนะทุกอย่าง จึงเหลือเพียงคำสั้น ๆ ที่ซ่อนความยาวไว้ถึงสามย่อหน้า"]
+  ]},
+  { q: "หากมีคนถามว่า “ยังคิดถึงแฟนเก่าอยู่ไหม?”", opts: [
+    ["คิดถึงทุกวัน แต่บอกว่าไม่", 4, "คุณคือบุคคลที่มีความสามารถในการปฏิเสธความจริงได้อย่างยอดเยี่ยม ปากบอกว่าไม่คิดถึง แต่สมองยังจำวันครบรอบได้แม่นกว่าวันสอบเสียอีก ขอแสดงความยินดี คุณได้ตำแหน่งคนไทยหัวใจไม่เคยลืมไปครอง"],
+    ["ไม่ได้คิดถึง แค่บางครั้งก็แอบนึกถึง", 2, "คุณไม่ได้คิดถึงเขาทุกวันหรอก แค่คิดถึงตอนตื่นนอน ตอนฟังเพลง ตอนกินข้าว ตอนเดินผ่านสถานที่เดิม และก่อนนอนเท่านั้นเอง ถือเป็นการคิดถึงแบบเป็นช่วงเวลา ไม่ใช่ตลอดเวลาแน่นอน"],
+    ["ไม่ได้คิดถึง แต่ถ้าเขากลับมาก็…", 3, "คุณอาจจะปิดประตูความสัมพันธ์ไปแล้ว แต่ดูเหมือนจะยังไม่ได้ล็อกประตู แถมยังซ่อนกุญแจสำรองไว้อย่างดี หากเขากลับมาเคาะประตูอีกครั้ง คุณก็พร้อมพิจารณาคำร้องขอเป็นกรณีพิเศษ"],
+    ["ไม่แล้ว จบไปนานแล้ว", 1, "คุณมั่นใจในคำตอบของตัวเองมาก และพร้อมประกาศให้โลกรู้ว่าชีวิตเดินหน้าต่อแล้ว แต่ถ้าบังเอิญมีคนพูดถึงชื่อเขาขึ้นมา ก็อาจมีอาการหยุดชะงักเล็กน้อยเหมือนระบบกำลังประมวลผล"]
+  ]}
+];
+
+const ANIMALS = [
+  { max: 8,  range: "5–8",   img: "assets/capybara.webp", color: "var(--mint)",
+    name: "คาปิบาร่าผู้ไม่แคร์โลก", en: "The Chillbara", short: "คาปิบาร่า", title: "ผู้ไม่แคร์โลก",
+    quote: "ชีวิตต้องไปต่อ น้ำพุร้อนยังรอเราอยู่",
+    desc: "คุณดูสงบ เย็นชา และไม่มีอะไรทำให้หวั่นไหวได้ แต่ความจริงคือคุณเลือกที่จะไม่รับรู้ข้อมูลเกี่ยวกับคนเก่า เพราะกลัวว่าวันสงบ ๆ จะกลายเป็นวันเศร้าอีกครั้ง เป็นสัตว์ที่ดูมูฟออนที่สุดในฝูง" },
+  { max: 12, range: "9–12",  img: "assets/cat.webp", color: "var(--peach)",
+    name: "แมวส้มสายสืบ", en: "The Stalker Cat", short: "แมวส้ม", title: "นักสืบหัวใจ",
+    quote: "ไม่ได้ส่อง แค่สงสัยเฉย ๆ",
+    desc: "คุณมีความสามารถพิเศษในการสืบค้นข้อมูลคนเก่าแบบไร้ร่องรอย ทั้ง Instagram, TikTok และ Facebook ไม่มีอะไรเล็ดลอดสายตาคุณไปได้ แต่ปัญหาคือสืบเก่งทุกเรื่อง ยกเว้นสืบว่าทำอย่างไรถึงจะเลิกคิดถึงเขา" },
+  { max: 16, range: "13–16", img: "assets/penguin.webp", color: "var(--sky)",
+    name: "เพนกวินรักเดียวใจเดียว", en: "The Loyal Penguin", short: "เพนกวิน", title: "รักเดียวใจเดียว",
+    quote: "ถึงจะหนาวแค่ไหน ก็ยังรอเธอ",
+    desc: "คุณเป็นคนรักจริงและจำรายละเอียดเก่งมาก แม้ความสัมพันธ์จะจบไปแล้ว แต่หัวใจยังเก็บความทรงจำเอาไว้ครบทุกใบเสร็จ เป็นเพนกวินที่พร้อมเดินทางไกล แต่ดันเดินวนกลับไปหาคนเดิม" },
+  { max: 20, range: "17–20", img: "assets/kraken.webp", color: "var(--lav)",
+    name: "หมึกยักษ์แห่งความคิดถึง", en: "The Ex-lover Kraken", short: "หมึกยักษ์", title: "แห่งความคิดถึง",
+    quote: "แปดมือแปดแขน ก็ยังเอื้อมไปไม่ถึงเธอ",
+    desc: "คุณคือที่สุดแห่งวงการคนเก่า มีหลายมือไว้ทำหลายภารกิจ มือหนึ่งส่อง IG อีกมือเปิดแชตเก่า อีกมือเปิดเพลงเศร้า ส่วนอีกห้ามือมีไว้กอดตัวเองในวันที่เขาไม่กลับมา เรียกได้ว่าเป็นสัตว์ที่มีความสามารถรอบด้าน แต่ยังขาดความสามารถในการมูฟออน" }
+];
+
+const LETTERS = ["A", "B", "C", "D"];
+const $ = s => document.querySelector(s);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let state = { screen: "intro", i: 0, picks: [] };
+
+const totalScore = () => state.picks.reduce((s, k, i) => s + QUESTIONS[i].opts[k][1], 0);
+const animalFor = score => ANIMALS.find(a => score <= a.max);
+
+function show(name, animate) {
+  for (const id of ["intro", "quiz", "result"]) {
+    const el = $("#" + id);
+    el.hidden = id !== name;
+    if (id === name && animate) { el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); }
+  }
+  if (animate) $(".win").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+}
+
+function renderQuiz() {
+  const i = state.i, q = QUESTIONS[i], pick = state.picks[i];
+  $("#qn").textContent = i + 1;
+  [...$("#progress").children].forEach((li, k) => {
+    li.className = k < i || (k === i && pick != null) ? "done" : k === i ? "now" : "";
+  });
+  $("#qtext").textContent = q.q;
+  const box = $("#opts");
+  box.replaceChildren();
+  q.opts.forEach((o, k) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "opt";
+    b.innerHTML = `<span class="letter l${k}">${LETTERS[k]}</span><span class="txt"></span>`;
+    b.querySelector(".txt").textContent = o[0];
+    if (pick != null) {
+      b.disabled = true;
+      b.classList.add(k === pick ? "is-picked" : "is-muted");
+    }
+    b.addEventListener("click", () => choose(k));
+    box.append(b);
+  });
+  const rv = $("#reveal");
+  rv.hidden = pick == null;
+  if (pick != null) {
+    $("#rletter").textContent = LETTERS[pick];
+    $("#rtext").textContent = q.opts[pick][2];
+    $("#next").textContent = i === QUESTIONS.length - 1 ? "ดูผลลัพธ์" : "ไปข้อต่อไป";
+  }
+}
+
+function choose(k) {
+  if (state.picks[state.i] != null) return;
+  state.picks[state.i] = k;
+  renderQuiz();
+  const rv = $("#reveal");
+  rv.classList.remove("pop"); void rv.offsetWidth; rv.classList.add("pop");
+  rv.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+  $("#next").focus({ preventScroll: true });
+}
+
+function renderResult() {
+  const score = totalScore(), a = animalFor(score);
+  const sec = $("#result");
+  sec.style.setProperty("--accent", a.color);
+  $("#rimg").src = a.img;
+  $("#rimg").alt = a.name;
+  $("#rscore").textContent = score;
+  $("#rname").textContent = a.name;
+  $("#ren").textContent = a.en;
+  $("#rquote").textContent = "“" + a.quote + "”";
+  $("#rdesc").textContent = a.desc;
+  $("#pin").style.left = ((score - 5 + 0.5) / 16 * 100) + "%";
+
+  $("#tbody").replaceChildren(...ANIMALS.map(x => {
+    const tr = document.createElement("tr");
+    if (x === a) tr.className = "me";
+    tr.innerHTML = `<td></td><td><span class="who"><img alt=""><span></span></span></td><td></td>`;
+    tr.cells[0].textContent = x.range;
+    tr.querySelector("img").src = x.img;
+    tr.querySelector(".who span").textContent = x.short;
+    if (x === a) tr.querySelector(".who").insertAdjacentHTML("beforeend", '<span class="you">คุณ</span>');
+    tr.cells[2].textContent = x.title;
+    return tr;
+  }));
+
+  $("#recap").replaceChildren(...state.picks.map((k, i) => {
+    const o = QUESTIONS[i].opts[k];
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="rq"></span><span class="ra"><span class="letter l${k}">${LETTERS[k]}</span><span class="t"></span><span class="pts">+${o[1]} คะแนน</span></span><span class="re"></span>`;
+    li.querySelector(".rq").textContent = `ข้อ ${i + 1}: ${QUESTIONS[i].q}`;
+    li.querySelector(".t").textContent = o[0];
+    li.querySelector(".re").textContent = o[2];
+    return li;
+  }));
+
+  $("#copybox").hidden = true;
+  $("#copy").textContent = "คัดลอกผลลัพธ์";
+}
+
+function render(animate) {
+  show(state.screen, animate);
+  if (state.screen === "quiz") renderQuiz();
+  if (state.screen === "result") renderResult();
+}
+
+$("#start").addEventListener("click", () => {
+  state = { screen: "quiz", i: 0, picks: [] };
+  render(true);
+});
+$("#next").addEventListener("click", () => {
+  if (state.i < QUESTIONS.length - 1) { state.i++; render(true); }
+  else { state.screen = "result"; render(true); }
+});
+$("#again").addEventListener("click", () => {
+  state = { screen: "intro", i: 0, picks: [] };
+  render(true);
+});
+$("#copy").addEventListener("click", () => {
+  const score = totalScore(), a = animalFor(score);
+  const text = `ฉันได้ ${score}/20 คะแนน ในแบบทดสอบ "คุณคิดถึงคนเก่าแค่ไหน"\nฉันคือ ${a.name} (${a.en})\n“${a.quote}”`;
+  const fallback = () => {
+    const box = $("#copybox");
+    box.value = text; box.hidden = false; box.focus(); box.select();
+    $("#copy").textContent = "คัดลอกข้อความในกล่องด้านล่างได้เลย";
+  };
+  try {
+    navigator.clipboard.writeText(text).then(() => { $("#copy").textContent = "คัดลอกแล้ว"; }, fallback);
+  } catch (e) { fallback(); }
+});
+
+function start(data) {
+  if (data && data.state) state = data.state;
+  render(false);
+}
+window.claude?.hot?.snapshot?.(() => ({ state }));
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
