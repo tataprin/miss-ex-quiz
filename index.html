@@ -10,7 +10,7 @@
 <meta property="og:description" content="แบบทดสอบ 5 ข้อ มาดูกันว่าคุณเป็นสัตว์อะไรในจักรวาลคนเก่า">
 <meta property="og:image" content="https://tataprin.github.io/miss-ex-quiz/assets/share.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/penguin.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.5s-7.6-4.6-9.5-9.3C1.1 7.7 3.3 4 6.9 4c2.2 0 3.7 1.3 5.1 3.1C13.4 5.3 14.9 4 17.1 4c3.6 0 5.8 3.7 4.4 7.2-1.9 4.7-9.5 9.3-9.5 9.3z' fill='%23F27C9C' stroke='%236A3D4C' stroke-width='2'/%3E%3C/svg%3E">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -151,15 +151,6 @@ h1 .ribbon{
   transform:rotate(-3deg);box-shadow:4px 4px 0 var(--pink-2);
 }
 .lead{max-width:34ch;font-size:19px}
-.cast{list-style:none;margin:6px 0 4px;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 18px}
-.cast li{display:grid;justify-items:center;gap:6px;font-size:15px}
-.cast img{
-  width:88px;height:88px;border-radius:50%;object-fit:cover;
-  border:3px solid var(--ink);background:var(--card);transition:transform .2s;
-}
-.cast li:nth-child(odd) img{transform:rotate(-5deg)}
-.cast li:nth-child(even) img{transform:rotate(5deg)}
-.cast li:hover img{transform:rotate(0) scale(1.08)}
 .meta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .chip{
   font-family:var(--f-display);font-size:14px;padding:2px 12px;
@@ -336,12 +327,6 @@ tr.me td{background:var(--accent,var(--butter))}
     <h1>คุณคิดถึง<br><span class="ribbon">คนเก่า</span>แค่ไหน</h1>
     <p class="lead">ตอบตามใจจริง แล้วมาดูกันว่าคุณเป็นสัตว์อะไรในจักรวาลคนเก่า</p>
     <div class="meta-row"><span class="chip">5 ข้อ</span><span class="chip">คะแนนเต็ม 20</span></div>
-    <ul class="cast">
-      <li><img src="assets/capybara.webp" alt="คาปิบาร่าแช่น้ำพุร้อน">คาปิบาร่า</li>
-      <li><img src="assets/cat.webp" alt="แมวส้มถือแว่นขยาย">แมวส้ม</li>
-      <li><img src="assets/penguin.webp" alt="เพนกวินกอดหัวใจ">เพนกวิน</li>
-      <li><img src="assets/kraken.webp" alt="หมึกยักษ์ร้องไห้">หมึกยักษ์</li>
-    </ul>
     <button class="btn" id="start" type="button">เริ่มเลย</button>
     <p class="tiny">ใช้เวลาไม่ถึง 2 นาที</p>
   </section>
